@@ -25,8 +25,11 @@ public class ProyectoSeguridad {
         do {
             String op = JOptionPane.showInputDialog(null, "¿Qué desea hacer? Seleccione una opción\n 1- Generar llaves" +
                     " \n 2- Firmar un archivo\n 3- Verificar la firma de un archivo\n 4- Salir\n");
-
+            if (op == null) {
+                break;
+            }
             try {
+                System.out.println(op);
                 opcion = Integer.parseInt(op);
             } catch (NumberFormatException e) {
                 JOptionPane.showMessageDialog(null, "INGRESE UNA OPCIÓN VÁLIDA", "ERROR", JOptionPane.ERROR_MESSAGE);
@@ -42,23 +45,14 @@ public class ProyectoSeguridad {
                 case 3:
                     verificador();
                     continue;
-                default:
+                case JOptionPane.CLOSED_OPTION:
+                    opcion = 4;
                     continue;
 
             }
 
+
         } while (opcion != 4);
-
-
-        //KeyPair pair = generarLlaves();
-        //KeyPair pair = getKeyPairFromKeyStore();
-        //Our secret message
-        String message = "the answer to life the universe and everything";
-        //Let's sign our message
-        //String signature = sign("foobar", pair.getPrivate());
-        //Let's check the signature
-        // boolean isCorrect = verify("foobar", signature, pair.getPublic());
-        //System.out.println("Signature correct: " + isCorrect);
     }
 
     public static void generador() throws Exception {
@@ -69,6 +63,10 @@ public class ProyectoSeguridad {
         do {
             String op = JOptionPane.showInputDialog(null, "¿Qué desea hacer? Seleccione una " +
                     "opción\n 1- Guardar llave pública\n 2- Guardar llave privada\n 3- Salir\n");
+
+            if (op == null) {
+                break;
+            }
             try {
                 opcion = Integer.parseInt(op);
             } catch (NumberFormatException e) {
@@ -100,7 +98,8 @@ public class ProyectoSeguridad {
                     }
                     System.err.println("Private key format: " + llaves.getLlavePrivada().getFormat());
                     continue;
-                default:
+                case JOptionPane.CLOSED_OPTION:
+                    opcion = 3;
                     continue;
             }
 
@@ -133,6 +132,8 @@ public class ProyectoSeguridad {
             privateKey = kf.generatePrivate(ks);
         }
         Firmador firmador = new Firmador(archivo, privateKey);
+
+        JOptionPane.showMessageDialog(null, "GUARDE SU FIRMA");
         jf.setDialogTitle("Guardar firma");
         seleccion = jf.showSaveDialog(null);
         if (seleccion == JFileChooser.APPROVE_OPTION) {
