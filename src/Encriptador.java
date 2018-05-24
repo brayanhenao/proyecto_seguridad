@@ -28,7 +28,7 @@ public class Encriptador {
 		return fileProcessor(Cipher.ENCRYPT_MODE, key, inputFile);
 	}
 
-	public byte[] desencriptar() {
+	public byte[] desencriptar() throws BadPaddingException {
 		return fileProcessor(Cipher.DECRYPT_MODE, key, inputFile);
 	}
 

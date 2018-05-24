@@ -1,3 +1,4 @@
+import javax.crypto.BadPaddingException;
 import javax.swing.*;
 import java.io.*;
 import java.nio.file.Files;
@@ -39,7 +40,12 @@ public class ProyectoSeguridad {
 				generador();
 				continue;
 			case 2:
-				firmador();
+				try {
+					firmador();
+				} catch (BadPaddingException e) {
+					JOptionPane.showMessageDialog(null, "PRUEBAAAA");
+				}
+				
 				continue;
 			case 3:
 				verificador();
@@ -57,6 +63,14 @@ public class ProyectoSeguridad {
 		GeneradorLlaves llaves = new GeneradorLlaves();
 
 		String pass = JOptionPane.showInputDialog(null, "Digite una password para proteger su llave privada");
+
+		if (pass.length() < 16) {
+			for (int i = pass.length(); i < 16; i++) {
+				pass += '0';
+			}
+		} else if (pass.length() > 16) {
+			pass = pass.substring(0, 15);
+		}
 
 		System.out.println("**************GENERANDO LLAVES*************");
 
@@ -111,7 +125,7 @@ public class ProyectoSeguridad {
 
 	}
 
-	public static void firmador() throws Exception {
+	public static void firmador() throws Exception,BadPaddingException {
 		JOptionPane.showMessageDialog(null, "SELECCIONE EL ARCHIVO A FIRMAR");
 		JFileChooser jf = new JFileChooser();
 		jf.setCurrentDirectory(new File("archivos/"));
@@ -133,11 +147,21 @@ public class ProyectoSeguridad {
 			byte[] bytes = Files.readAllBytes(path);
 			String pass = JOptionPane.showInputDialog(null, "Digite la password asociada a la llave privada");
 
+			if (pass.length() < 16) {
+				for (int i = pass.length(); i < 16; i++) {
+					pass += '0';
+				}
+			} else if (pass.length() > 16) {
+				pass = pass.substring(0, 15);
+			}
+
 			Encriptador enc = new Encriptador(pass, bytes);
 			try {
 				bytes = enc.desencriptar();
-			} catch (Exception e) {
+			} catch (BadPaddingException e) {
 				ok = false;
+				JOptionPane.showMessageDialog(null, "Clave incorrecta", "Error", JOptionPane.ERROR_MESSAGE);
+				
 			}
 
 			if (ok) {
