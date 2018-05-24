@@ -73,7 +73,8 @@ public class ProyectoSeguridad {
                 JOptionPane.showMessageDialog(null, "INGRESE UNA OPCIÓN VÁLIDA", "ERROR", JOptionPane.ERROR_MESSAGE);
             }
             int seleccion;
-            JFileChooser jf = new JFileChooser();
+            JFileChooser jf = new JFileChooser("claves/");
+
             String path;
             switch (opcion) {
                 case 1:
@@ -111,6 +112,7 @@ public class ProyectoSeguridad {
     public static void firmador() throws Exception {
         JOptionPane.showMessageDialog(null, "SELECCIONE EL ARCHIVO A FIRMAR");
         JFileChooser jf = new JFileChooser();
+        jf.setCurrentDirectory(new File("archivos/"));
         jf.setDialogTitle("Seleccionar archivo a firmar");
         int seleccion = jf.showSaveDialog(null);
         File archivo = null;
@@ -119,6 +121,7 @@ public class ProyectoSeguridad {
         }
 
         JOptionPane.showMessageDialog(null, "SELECCIONE LA LLAVE PRIVADA PARA FIRMAR");
+        jf.setCurrentDirectory(new File("claves/"));
         jf.setDialogTitle("Seleccionar llave privada");
         seleccion = jf.showSaveDialog(null);
 
@@ -134,6 +137,7 @@ public class ProyectoSeguridad {
         Firmador firmador = new Firmador(archivo, privateKey);
 
         JOptionPane.showMessageDialog(null, "GUARDE SU FIRMA");
+        jf.setCurrentDirectory(new File("archivos/"));
         jf.setDialogTitle("Guardar firma");
         seleccion = jf.showSaveDialog(null);
         if (seleccion == JFileChooser.APPROVE_OPTION) {
@@ -148,6 +152,7 @@ public class ProyectoSeguridad {
     public static void verificador() throws Exception {
         JOptionPane.showMessageDialog(null, "SELECCIONE EL ARCHIVO A VERIFICAR");
         JFileChooser jf = new JFileChooser();
+        jf.setCurrentDirectory(new File("archivos/"));
         jf.setDialogTitle("Seleccionar archivo a verificar");
         int seleccion = jf.showSaveDialog(null);
         File archivo = null;
@@ -156,6 +161,7 @@ public class ProyectoSeguridad {
         }
 
         JOptionPane.showMessageDialog(null, "SELECCIONE LA LLAVE PUBLICA");
+        jf.setCurrentDirectory(new File("claves/"));
         jf.setDialogTitle("Seleccionar llave pública");
         seleccion = jf.showSaveDialog(null);
 
@@ -170,6 +176,7 @@ public class ProyectoSeguridad {
         }
 
         JOptionPane.showMessageDialog(null, "SELECCIONE LA FIRMA DEL ARCHIVO");
+        jf.setCurrentDirectory(new File("archivos/"));
         jf.setDialogTitle("Seleccionar firma");
         seleccion = jf.showSaveDialog(null);
 
