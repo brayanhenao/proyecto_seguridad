@@ -16,28 +16,28 @@ public class Verificador {
     }
 
     /*
-     * Se encarga de verificar la firma del emisor del mensaje
-     * 
-     * @return boolean indicando si la firma del emisor es correcta
+     * Se encarga de verificar la firma de un archivo.
+     *
+     * @return boolean indicando si la firma del emisor concuerda con el archivo
      */
     public boolean verificar() throws Exception {
 
         //Firma pública
-        Signature publicSignature = Signature.getInstance("SHA256withRSA");
+        Signature firmador = Signature.getInstance("SHA256withRSA");
 
         //Se convierte el archivo en un arreglo de bytes
         byte[] archivoBytes = Files.readAllBytes(archivo.toPath());
 
         //Se inicia la verificación con la clave pública
-        publicSignature.initVerify(clavePublica);
+        firmador.initVerify(clavePublica);
 
-        //Se actualiza la firma con el archivo
-        publicSignature.update(archivoBytes);
+        //Se actualiza la firmador con el archivo
+        firmador.update(archivoBytes);
 
-        //Se decodifica la firma
-        byte[] signatureBytes = Base64.getDecoder().decode(firma);
+        //Se decodifica la firmador
+        byte[] bytesFirma = Base64.getDecoder().decode(this.firma);
 
-        //Se verifica la firma
-        return publicSignature.verify(signatureBytes);
+        //Se verifica la firmador
+        return firmador.verify(bytesFirma);
     }
 }
