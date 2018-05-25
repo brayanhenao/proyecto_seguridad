@@ -184,10 +184,7 @@ public class ProyectoSeguridad {
                 out.write(firmador.firmar());
                 out.close();
             }
-        } else {
-
         }
-
     }
 
     public static void verificador() throws Exception {
