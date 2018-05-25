@@ -14,6 +14,11 @@ public class Firmador {
         this.archivo = archivo;
     }
 
+    /*
+     * Se encarga de firmar el archivo parametro de la instancia
+     * 
+     * @return String con la firma generada
+     */
     public String firmar() throws Exception {
         //Firma privada
         Signature firmaPrivada = Signature.getInstance("SHA256withRSA");

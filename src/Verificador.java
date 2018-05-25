@@ -15,6 +15,11 @@ public class Verificador {
         this.clavePublica = clavePublica;
     }
 
+    /*
+     * Se encarga de verificar la firma del emisor del mensaje
+     * 
+     * @return boolean indicando si la firma del emisor es correcta
+     */
     public boolean verificar() throws Exception {
 
         //Firma pública
